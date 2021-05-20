@@ -1,0 +1,22 @@
+[flake8]
+max-line-length = 120
+max-complexity = 18
+select = B, C, E, F, W, T4, B9, ISC
+    # B = bugbear
+    # E = pycodestyle errors
+    # F = flake8 pyflakes
+    # W = pycodestyle warnings
+    # B9 = bugbear opinions
+    # ISC = implicit-str-concat
+ignore =
+    # line length, handled by bugbear B950
+    E501
+    # bare except, handled by bugbear B001
+    E722
+    # line break before bin-op, invalid
+    W503
+    # line break after bin-op, invalid
+    W504
+per-file-ignores =
+    # __init__ module imported but unused
+    **/__init__.py: F401

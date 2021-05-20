@@ -1,0 +1,8 @@
+site_name: Aivo API
+
+nav:
+    - Home: index.md
+    - Developers: developers.md
+    - About: about.md
+
+theme: readthedocs
