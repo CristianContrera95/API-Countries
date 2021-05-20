@@ -16,7 +16,8 @@ You can download the project from github repository and create a virtualenv.
 Open a bash shell in the root of project and run:
 
 ``` bash
-git clone 
+git clone https://github.com/CristianContrera95/API-Countries.git
+cd API-Countries
 chmod +x scripts/**
 ./scripts/create_env.sh dev
 ```
@@ -34,15 +35,15 @@ To run test
 
 With a shell in the root of the project, run:
 ``` bash
-./scripts/run_test.sh
+./scripts/run_tests.sh
 ```
 
 ### Contributing
 
 > To Contribute in AIVO-API is required send bitcoints to owner wallet!
 
-To add new use case ....
-....
-...
-..
-.
+To add new use case ....  
+....  
+...  
+..  
+.  
