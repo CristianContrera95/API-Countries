@@ -58,10 +58,8 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#api-endpoints">API - EndPoints</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#countries">Countries</a>
+    <li class="toctree-l3"><a class="reference internal" href="#countries-httphostportcountries">Countries - http://&lt;host:port&gt;/countries/</a>
         <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#httphostportcountries">http://&lt;host:port>/countries/</a>
-    </li>
     <li class="toctree-l4"><a class="reference internal" href="#parameters">Parameters</a>
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#response">Response</a>
@@ -121,30 +119,53 @@
 <h3 id="set-up">Set up</h3>
 <p>Setup <strong>aivo-api</strong> is done in the usual ways. The simplest way is with bash:</p>
 <p>Clone repo from GitHub:</p>
-<pre><code class="language-bash">git clone
-cd aivo_challenge 
+<pre><code class="language-bash">git clone https://github.com/CristianContrera95/API-Countries.git
+cd API-Countries 
 </code></pre>
-<p>Set permission to scripts</p>
+<p>Set permission to scripts:</p>
 <pre><code class="language-bash">chmod +x scripts/**
 </code></pre>
-<p>Now you can use virtualenv as next lines:</p>
-<pre><code class="language-bash">./scripts/create_env.sh
+<p>Now you can use <strong>virtualenv</strong> or <strong>docker</strong> as next lines:</p>
+<blockquote>
+<ul>
+<li><strong>Virtualenv</strong>:</li>
+</ul>
+</blockquote>
+<pre><code class="language-bash"> ./scripts/create_env.sh
 ./scripts/run.sh
 </code></pre>
-<p>Or use docker:</p>
+<blockquote>
+<ul>
+<li><strong>docker</strong>:</li>
+</ul>
+</blockquote>
 <pre><code class="language-bash">./scripts/build_docker.sh
 ./scripts/run.sh docker
 </code></pre>
-<p>Any way set up <strong>AIVO-api</strong> on <a href="http://localhost:8000">http://localhost:8000</a>, after this you can request to api for countries using the follow endpoints  </p>
+<p>Any way <strong>AIVO-api</strong> will be running on <a href="http://localhost:8000">http://localhost:8000</a>,
+after this you can receive a list of countries, from the api, using the following endpoints.  </p>
 <hr />
 <h2 id="api-endpoints">API - EndPoints</h2>
 <p>This part of the documentation covers all the interfaces of <strong>aivo-api</strong>  </p>
-<h3 id="countries">Countries</h3>
-<h5 id="httphostportcountries">http://&lt;host:port>/countries/</h5>
+<h3 id="countries-httphostportcountries">Countries - <code>http://&lt;host:port&gt;/countries/</code></h3>
+<p>This endpoint allows you, receive a list of countries filtered using an indicator and value for it.</p>
 <h5 id="parameters">Parameters</h5>
 <p>These parameters are allowed to filter data</p>
-<pre><code># Example
-http://localhost:5000/countries/?indicator=Life+satisfactionvalue=2.4&amp;skip=10&amp;limit=10&amp;sort=Value:desc
+<pre><code># Example url
+http://localhost:8000/countries/?indicator=Life+satisfaction&amp;value=2.4&amp;skip=10&amp;limit=10&amp;sort=Value:desc
+</code></pre>
+<pre><code class="language-python"># Example python
+import requests
+
+r = requests.get(&quot;http://localhost:8000/countries/&quot;,
+                 params={&quot;indicator&quot;: &quot;Life satisfaction&quot;,  # optional
+                         &quot;value&quot;: 2.4,  
+                         &quot;skip&quot;: 10,           # optional
+                         &quot;limit&quot; :10,          # optional
+                         &quot;sort&quot;: &quot;Value:desc&quot;  # optional
+                         }
+                 )
+print(r.json())
 </code></pre>
 <ul>
 <li><strong>indicator</strong>: string <br />
@@ -158,7 +179,7 @@ http://localhost:5000/countries/?indicator=Life+satisfactionvalue=2.4&amp;skip=1
 <li><strong>limit</strong>: integer<br />
     Default value : 0  </li>
 <li><strong>sort</strong>: string<br />
-    Par "Columns:\<asc|desc>" to sort results  </li>
+    Par "column:(asc|desc)" to sort results (ie: <code>sort=Value:desc</code>)</li>
 </ul>
 <h5 id="response">Response</h5>
 <pre><code># Example
@@ -178,32 +199,24 @@ http://localhost:5000/countries/?indicator=Life+satisfactionvalue=2.4&amp;skip=1
 <ul>
 <li><strong>countries</strong>: List[dict(country: string, value: int)]<br />
     List of countries with their values  </li>
-<li>
-<p><strong>indicator</strong>: string<br />
-    Parameter indicator given<br />
-<strong>min_value</strong>: integer<br />
-    Parameter value given<br />
-<strong>amount_results</strong>: integer<br />
-    amount results given <br />
-<strong>total_results</strong>: integer<br />
-    total results without using skip and limit  </p>
-</li>
-<li>
-<p>Note:
-  If and error occurs the response will be:</p>
-</li>
+<li><strong>indicator</strong>: string<br />
+    Parameter indicator given  </li>
+<li><strong>min_value</strong>: integer<br />
+    Parameter value given  </li>
+<li><strong>amount_results</strong>: integer<br />
+    amount results given   </li>
+<li><strong>total_results</strong>: integer<br />
+    total results without using skip and limit  </li>
 </ul>
+<blockquote>
+<ul>
+<li>Note:
+  If and error occurs the response will be:</li>
+</ul>
+</blockquote>
 <pre><code># Example
 {
-  &quot;detail&quot;: [
-    {
-      &quot;loc&quot;: [
-        &quot;string&quot;
-      ],
-      &quot;msg&quot;: &quot;string&quot;,
-      &quot;type&quot;: &quot;string&quot;
-    }
-  ]
+    &quot;detail&quot;: &quot;Error message&quot;
 }
 </code></pre>
               
@@ -259,5 +272,5 @@ http://localhost:5000/countries/?indicator=Life+satisfactionvalue=2.4&amp;skip=1
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2021-05-20 16:45:18.817780+00:00
+Build Date UTC : 2021-05-20 17:13:10.465780+00:00
 -->
