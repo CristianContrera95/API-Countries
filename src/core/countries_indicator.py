@@ -19,7 +19,7 @@ def get_countries_filtered_by_indicator(**kwargs):
 
     if _validate_filter(df["Indicator"].str.lower().values, indicator.lower()):
         df = df[(df["Indicator"].str.lower() == indicator.lower()) &
-                (df["Inequality"].str == 'Total') &
+                (df["Inequality"] == 'Total') &
                 (df["Value"] > value)
                 ]
 
