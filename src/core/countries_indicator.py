@@ -19,7 +19,9 @@ def get_countries_filtered_by_indicator(**kwargs):
 
     if _validate_filter(df["Indicator"].str.lower().values, indicator.lower()):
         df = df[(df["Indicator"].str.lower() == indicator.lower()) &
-                (df["Value"] > value)]
+                (df["Inequality"].str == 'Total') &
+                (df["Value"] > value)
+                ]
 
         return df, indicator, value
     raise BadFilterException(f"Indicator '{indicator}' not found in data")
